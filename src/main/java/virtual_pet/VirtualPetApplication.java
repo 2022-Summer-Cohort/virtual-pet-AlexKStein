@@ -12,12 +12,13 @@ public class VirtualPetApplication {
         String petName = input.nextLine();
         System.out.println("Is your pet a dog or a cat?");
         String type = input.nextLine();
-        VirtualPet pet1 = new VirtualPet(petName, 20, type, 0);
+        VirtualPet pet1 = new VirtualPet(petName, 20, type, 0, 0);
         pet1.meetPet();
 
         while (!exitGame) {
-            System.out.println("What would you like to do with " + petName + "? you can play, feed, and nap. Type 'quit' to quit.");
+            System.out.println("What would you like to do with " + petName + "? you can play, feed, and nap. Type 'status' to check on your pet, or 'quit' to quit.");
             String command = input.nextLine();
+
             if (command.equalsIgnoreCase("play")) {
                 pet1.play();
                 pet1.tick();
@@ -33,12 +34,18 @@ public class VirtualPetApplication {
                 pet1.tick();
                 pet1.statusUpdate();
             }
-            else {
+            else if(command.equalsIgnoreCase("status")){
+                pet1.tick();
+                pet1.statusUpdate();
+            }
+            else if (command.equalsIgnoreCase("quit")){
                 exitGame = true;
+            }
+            else{
+                System.out.println(petName + " cocks their head, command not recognized.");
             }
         }
         System.out.println("Goodbye!");
-
 
 
     }
