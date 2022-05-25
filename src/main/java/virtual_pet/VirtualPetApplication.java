@@ -12,20 +12,28 @@ public class VirtualPetApplication {
         String petName = input.nextLine();
         System.out.println("Is your pet a dog or a cat?");
         String type = input.nextLine();
-        VirtualPet pet1 = new VirtualPet(petName, 20, type, 0, 0);
+        VirtualPet pet1 = new VirtualPet(petName, 20, type, 0, 0, false);
         pet1.meetPet();
 
         while (!exitGame) {
-            System.out.println("What would you like to do with " + petName + "? you can play, feed, and nap. Type 'status' to check on your pet, or 'quit' to quit.");
+            System.out.println("What would you like to do with " + pet1.getName() + "? you can play, feed, and nap. Type 'status' to check on your pet, or 'quit' to quit.");
             String command = input.nextLine();
-
-            if (command.equalsIgnoreCase("play")) {
-                pet1.play();
+            if (command.equalsIgnoreCase("quit")){
+                exitGame = true;
+            }
+            if(command.equalsIgnoreCase("status")){
+                pet1.statusUpdate();
+            }
+            if (command.equalsIgnoreCase("feed")) {
+                pet1.feedPet();
                 pet1.tick();
                 pet1.statusUpdate();
             }
-            else if (command.equalsIgnoreCase("feed")) {
-                pet1.feedPet();
+            else if (pet1.isRioting()){
+                System.out.println(pet1.getName() + " is not cooperating. Maybe they're hungry?");
+            }
+            else if (command.equalsIgnoreCase("play")) {
+                pet1.play();
                 pet1.tick();
                 pet1.statusUpdate();
             }
@@ -36,18 +44,12 @@ public class VirtualPetApplication {
             }
             else if(command.equalsIgnoreCase("status")){
                 pet1.tick();
-                pet1.statusUpdate();
-            }
-            else if (command.equalsIgnoreCase("quit")){
-                exitGame = true;
             }
             else{
-                System.out.println(petName + " cocks their head, command not recognized.");
+                System.out.println(pet1.getName() + " cocks their head, command not recognized.");
             }
         }
         System.out.println("Goodbye!");
-
-
     }
 
 }

@@ -7,7 +7,7 @@ public class VirtualPetTest {
     @Test
     public void hungerShouldDecreaseBy50andSleepinessIncreaseBy25() {
         //Assignment
-        VirtualPet underTest = new VirtualPet ("Frodo", 100,  "dog", 0,0);
+        VirtualPet underTest = new VirtualPet ("Frodo", 100,  "dog", 0,0, false );
         //Action
         underTest.feedPet();
         //Assertion
@@ -15,9 +15,9 @@ public class VirtualPetTest {
         assertEquals(25, underTest.getSleepiness());
     }
     @Test
-    public void sleepinessShouldBe75() {
+    public void sleepinessShouldBeHigherAndBoredomLower() {
         //Assignment
-        VirtualPet underTest = new VirtualPet("Frodo", 0,  "dog", 25, 50);
+        VirtualPet underTest = new VirtualPet("Frodo", 0,  "dog", 25, 50, false);
         //Action
         underTest.play();
         //Assertion
@@ -27,7 +27,7 @@ public class VirtualPetTest {
     @Test
     public void sleepinessShouldBeResetAndBoredomUpTen() {
         //Assignment
-        VirtualPet underTest = new VirtualPet("Frodo", 0, "dog", 85, 0);
+        VirtualPet underTest = new VirtualPet("Frodo", 0, "dog", 85, 0, false);
         //Action
         underTest.nap();
         //Assertion
@@ -37,7 +37,7 @@ public class VirtualPetTest {
     @Test
     public void hungerAndSleepinessShouldIncrease() {
         //Assignment
-        VirtualPet underTest = new VirtualPet("Frodo", 1, "dog", 1, 0);
+        VirtualPet underTest = new VirtualPet("Frodo", 1, "dog", 1, 0, false);
         //Action
         underTest.tick();
         //Assertion
