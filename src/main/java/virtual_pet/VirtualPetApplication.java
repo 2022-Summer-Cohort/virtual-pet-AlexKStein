@@ -16,17 +16,17 @@ public class VirtualPetApplication {
         pet1.meetPet();
 
         while (!exitGame) {
-            System.out.println("What would you like to do with " + pet1.getName() + "? you can play, feed, and nap. Type 'status' to check on your pet, or 'quit' to quit.");
+            System.out.println("What would you like to do with " + pet1.getName() + "? you can 'play', 'feed', 'nap' and 'wait'. Type 'status' to check on your pet, or 'quit' to quit.");
             String command = input.nextLine();
             if (command.equalsIgnoreCase("quit")){
                 exitGame = true;
             }
-            if(command.equalsIgnoreCase("status")){
-                pet1.statusUpdate();
-            }
             if (command.equalsIgnoreCase("feed")) {
                 pet1.feedPet();
                 pet1.tick();
+                pet1.statusUpdate();
+            }
+            else if(command.equalsIgnoreCase("status")){
                 pet1.statusUpdate();
             }
             else if (pet1.isRioting()){
@@ -42,8 +42,9 @@ public class VirtualPetApplication {
                 pet1.tick();
                 pet1.statusUpdate();
             }
-            else if(command.equalsIgnoreCase("status")){
+            else if(command.equalsIgnoreCase("wait")){
                 pet1.tick();
+                pet1.statusUpdate();
             }
             else{
                 System.out.println(pet1.getName() + " cocks their head, command not recognized.");

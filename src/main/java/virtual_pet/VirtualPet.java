@@ -69,13 +69,24 @@ public class VirtualPet {
         boredom += 5;
     }
     public void statusUpdate(){
+        String sleepStatus = "";
+        String hungerStatus = "";
+        String boredomStatus = "";
+
         if (sleepiness >= 100){
             System.out.println(name + " is too tired and goes to take a nap.");
             nap();
         }
+        if (sleepiness < 100 && sleepiness >= 50){
+            sleepStatus = sleepiness +" :|";
+        }
         if (sleepiness <0){
             sleepiness = 0;
         }
+        if (sleepiness < 50){
+            sleepStatus = sleepiness + " :D";
+        }
+
         if (hungerLevel >= 100){
             hungerLevel = 100;
             rioting = true;
@@ -85,10 +96,18 @@ public class VirtualPet {
             if (petType.equalsIgnoreCase("dog")) {
                 System.out.println(name + " barks and sits down by their food bowl");
             }
+            hungerStatus = hungerLevel + " >:(";
+        }
+        if( hungerLevel >=50 && hungerLevel<100){
+            hungerStatus = hungerLevel + " :|";
         }
         if (hungerLevel <0){
             hungerLevel = 0;
         }
+        if (hungerLevel <50){
+            hungerStatus = hungerLevel + " :D";
+        }
+
         if (boredom >= 100){
             boredom = 100;
             if (!rioting){
@@ -96,9 +115,15 @@ public class VirtualPet {
                 play();
             }
         }
+        if( boredom >=50 && boredom<100){
+            boredomStatus = boredom + " :|";
+        }
         if (boredom <0){
             boredom = 0;
         }
-        System.out.println(name + ": hunger = " + hungerLevel +"/100, sleepiness = " + sleepiness + "/100, and boredom = " + boredom + "/100.");
+        if (boredom <50){
+            boredomStatus = boredom + " :D";
+        }
+        System.out.println(name + ": hunger = " + hungerStatus +", sleepiness = " + sleepStatus + ", and boredom = " + boredomStatus + ".");
     }
 }
