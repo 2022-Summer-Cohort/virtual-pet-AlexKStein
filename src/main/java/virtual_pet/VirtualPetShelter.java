@@ -16,12 +16,17 @@ public class VirtualPetShelter {
 
 
     //methods
-    public void admit(VirtualPet toAdd){
+    public void abandon(VirtualPet toAdd){
         petShelter.add(toAdd);
     }
     public void feedAll(){
         for(VirtualPet thisPet: petShelter){
             thisPet.feedPet();
+        }
+    }
+    public void meetAll(){
+        for(VirtualPet thisPet: petShelter){
+            thisPet.meetPet();
         }
     }
     public void playAll(){
@@ -36,6 +41,7 @@ public class VirtualPetShelter {
     }
     public void statusAll(){
         for(VirtualPet thisPet: petShelter){
+            System.out.print("Room " + (petShelter.indexOf(thisPet)+1) + "~ ");
             thisPet.statusUpdate();
         }
     }
@@ -44,9 +50,9 @@ public class VirtualPetShelter {
             thisPet.tick();
         }
     }
-    public void listALl(){
+    public void listAll(){
         for(VirtualPet thisPet: petShelter) {
-            System.out.println(thisPet.getName() + " is in room " + petShelter.indexOf(thisPet));
+            System.out.println(thisPet.getName() + " is in room " + (petShelter.indexOf(thisPet) +1));
         }
     }
 
@@ -69,7 +75,4 @@ public class VirtualPetShelter {
 //            System.out.println("There is no pet with that name available.");
 //        }
     }
-
-
-
 }

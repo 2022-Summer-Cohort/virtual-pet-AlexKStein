@@ -50,17 +50,10 @@ public class VirtualPet {
         sleepiness += 25;
         hunger += 15;
         boredom -= 50;
-        if (petType.equalsIgnoreCase("dog")){
-            System.out.println(name + "'s tail is wagging, they are less bored but getting tired.");
-        }
-        if (petType.equalsIgnoreCase("cat")){
-            System.out.println(name + " purrs, they are less bored but getting tired. ");
-        }
     }
     public void nap(){
         sleepiness = 0;
         boredom += 15;
-        System.out.println(name + " yawns after a nice nap and is no longer tired!");
     }
     public void tick(){
         hunger+=10;
