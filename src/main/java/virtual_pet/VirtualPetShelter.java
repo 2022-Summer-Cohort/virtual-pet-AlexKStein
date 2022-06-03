@@ -14,8 +14,7 @@ public class VirtualPetShelter {
         return petShelter;
     }
 
-
-    //methods
+//methods
     public void abandon(VirtualPet toAdd){
         petShelter.add(toAdd);
     }
@@ -26,6 +25,7 @@ public class VirtualPetShelter {
     }
     public void meetAll(){
         for(VirtualPet thisPet: petShelter){
+            System.out.print("[Room " + (petShelter.indexOf(thisPet)+1) + "]~ ");
             thisPet.meetPet();
         }
     }
@@ -41,7 +41,7 @@ public class VirtualPetShelter {
     }
     public void statusAll(){
         for(VirtualPet thisPet: petShelter){
-            System.out.print("Room " + (petShelter.indexOf(thisPet)+1) + "~ ");
+            System.out.print("[Room " + (petShelter.indexOf(thisPet)+1) + "]~ ");
             thisPet.statusUpdate();
         }
     }
@@ -52,27 +52,44 @@ public class VirtualPetShelter {
     }
     public void listAll(){
         for(VirtualPet thisPet: petShelter) {
-            System.out.println(thisPet.getName() + " is in room " + (petShelter.indexOf(thisPet) +1));
+            System.out.println(thisPet.getName() + " is in [Room " + (petShelter.indexOf(thisPet) +1) + "]");
         }
     }
 
     public void adoptPet(int roomNum){
         petShelter.remove(roomNum);
-
-//        System.out.println("Who would you like to adopt? Type 'shelter list' to see who's available!");
-//        String adoption = input.nextLine().toLowerCase();
-//
-//        for (VirtualPet thisPet: petShelter) {
-//            if (thisPet.getName().equals(adoption)) {
-//                System.out.println("Thank you for your adoption! " + adoption + " is going to love their new fur-ever home.");
-//            }
-//        }
-//        if (adoption.equalsIgnoreCase("shelter list")) {
-//            listALl();
-//            adoptPet();
-//        }
-//        else {
-//            System.out.println("There is no pet with that name available.");
-//        }
+    }
+    public void wrongCommand(){
+        System.out.println("All you hear is howls, barking and hissing. Something you typed wasn't quite right...");
+    }
+    public void randomEvent(){
+        int chanceNum = (int) (Math.random()*11);
+        System.out.print("[Random Event]");
+        switch (chanceNum) {
+            case 0:
+                System.out.println("Nap time?!? Everyone takes a quick nap.");
+                napAll();
+                break;
+            case 1:
+                System.out.println("CHAOS! All the animals are romping, but they're definitely not bored anymore");
+                playAll();
+                break;
+            case 2:
+                VirtualPet pet1 = petShelter.get((int)(Math.random()*petShelter.size()));
+                VirtualPet pet2 = petShelter.get((int)(Math.random()*petShelter.size()));
+                pet1.play(); pet2.play();
+                System.out.println(pet1.getName() + " and " + pet2.getName() + " are playing together c:");
+                break;
+            case 3:
+                pet1 = petShelter.get((int)(Math.random()*petShelter.size()));
+                pet2 = petShelter.get((int)(Math.random()*petShelter.size()));
+                VirtualPet pet3 = petShelter.get((int)(Math.random()*petShelter.size()));
+                pet1.play(); pet2.play(); pet3.play();
+                System.out.println(pet1.getName() + ", " + pet2.getName() + " and " + pet3.getName() + " are all playing together c:");
+                break;
+            default:
+                System.out.println("Nothing happens.");
+                break;
+        }
     }
 }
