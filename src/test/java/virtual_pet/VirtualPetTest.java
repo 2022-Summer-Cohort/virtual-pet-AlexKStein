@@ -6,39 +6,31 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class VirtualPetTest {
+//VirtualPet Tests
     @Test
-    public void hungerShouldDecreaseBy50andSleepinessIncreaseBy25() {
-        //Assignment
-        VirtualPet underTest = new VirtualPet ("Frodo", 100,  "dog", 0,0, false );
-        //Action
+    public void hungerShouldDecreaseAndSleepinessIncrease() {
+        VirtualPet underTest = new VirtualPet ("Frodo", 90,  "dog", 0,0, false );
         underTest.feedPet();
-        //Assertion
-        assertEquals(25, underTest.getHunger());
-        assertEquals(25, underTest.getSleepiness());
+        assertTrue(underTest.getHunger()<90);
+        assertTrue( underTest.getSleepiness()>0);
     }
     @Test
     public void sleepinessShouldBeHigherAndBoredomLower() {
-        //Assignment
         VirtualPet underTest = new VirtualPet("Frodo", 0,  "dog", 25, 50, false);
-        //Action
         underTest.play();
-        //Assertion
-        assertEquals(70, underTest.getSleepiness());
-        assertEquals(15, underTest.getBoredom());
+        assertTrue(underTest.getSleepiness() > 25);
+        assertTrue(underTest.getBoredom() <50);
     }
     @Test
-    public void sleepinessShouldBeResetAndBoredomUpTen() {
-        //Assignment
+    public void sleepinessShouldBeZeroAndBoredomIncreases() {
         VirtualPet underTest = new VirtualPet("Frodo", 0, "dog", 85, 0, false);
-        //Action
         underTest.nap();
-        //Assertion
         assertEquals(0, underTest.getSleepiness());
-        assertTrue(underTest.getBoredom()>1);
+        assertTrue(underTest.getBoredom()>0);
     }
     @Test
     public void hungerAndSleepinessShouldIncrease() {
-        VirtualPet underTest = new VirtualPet("Frodo", 1, "dog", 1, 0, false);
+        VirtualPet underTest = new VirtualPet("Frodo", 1, "dog", 1, 1, false);
         underTest.tick();
         assertTrue(underTest.getHunger() >1);
         assertTrue(underTest.getSleepiness() >1);
@@ -53,12 +45,10 @@ public class VirtualPetTest {
     }
     @Test
     public void petShouldBeRemovedAfterAdoptPet() {
-        //assignments
         VirtualPetShelter underTest = new VirtualPetShelter();
         underTest.abandon(new VirtualPet("Frodo", 1, "dog", 1, 0, false));
         underTest.abandon(new VirtualPet("adoptTest", 1, "dog", 1, 0, false));
         underTest.abandon(new VirtualPet("Korra", 1, "dog", 1, 0, false));
-        //action
         underTest.adoptPet(2);
         assertTrue(underTest.getPetShelter().size() < 3);
     }

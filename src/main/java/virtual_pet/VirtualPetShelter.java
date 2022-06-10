@@ -1,10 +1,8 @@
 package virtual_pet;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class VirtualPetShelter {
-    Scanner input = new Scanner(System.in);
     private ArrayList<VirtualPet> petShelter;
 
     public VirtualPetShelter() {
