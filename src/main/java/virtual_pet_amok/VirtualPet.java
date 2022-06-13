@@ -8,7 +8,7 @@ public abstract class VirtualPet {
     protected int energy; //this will be used for robot charge and organic sleepiness.
     protected int thirst; //liquor replaces oil. see game for details
     private boolean riot; //true will make pet unresponsive until an issue is fixed.
-    private String adoptionName;
+    private String trueName;
 
     public String getName() {
         return name;
@@ -29,11 +29,11 @@ public abstract class VirtualPet {
         return thirst;
     }
     public boolean isRiot() { return riot;}
-    public String getAdoptionName(){ return adoptionName; }
+    public String getTrueName(){ return trueName; }
 
 
     public VirtualPet(String name, String type, String noise, int boredom, int energy, int thirst, boolean riot) {
-        this.adoptionName = name;
+        this.trueName = name;
         if (type.equalsIgnoreCase("robot dog")){
             this.name = name + " ~U*ᴥ*U~";
         }

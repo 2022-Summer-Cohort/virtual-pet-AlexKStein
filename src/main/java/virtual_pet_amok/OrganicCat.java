@@ -16,6 +16,7 @@ public class OrganicCat extends Organic{
     }
     @Override
     public void cleanRoom(){
+        System.out.println("Thanks for cleaning out " + getName() +"'s litter box.");
         litter = 0;
         clean = true;
     }

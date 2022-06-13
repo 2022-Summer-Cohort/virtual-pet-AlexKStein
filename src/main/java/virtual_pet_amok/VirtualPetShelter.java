@@ -1,6 +1,5 @@
 package virtual_pet_amok;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 public class VirtualPetShelter {
@@ -29,6 +28,23 @@ public class VirtualPetShelter {
 
     public void adoptPet(VirtualPet thisPet){
         petShelter.remove(thisPet);
+    }
+    public boolean isPetFound(String petName){
+        for (VirtualPet thisPet: petShelter){
+            if(petName.equalsIgnoreCase(thisPet.getTrueName())){
+                return true;
+            }
+        }
+        return false;
+    }
+    public VirtualPet petFinder(String petName){
+        for(VirtualPet thisPet: petShelter){
+            if(thisPet.getTrueName().equalsIgnoreCase(petName)){
+                return thisPet;
+            }
+        }
+        System.out.println("Pet not found.");;
+        return null;
     }
     public void wrongCommand(){
         System.out.println("All you hear is howls, barking and hissing. Something you typed wasn't quite right...");

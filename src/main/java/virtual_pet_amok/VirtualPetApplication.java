@@ -50,7 +50,7 @@ public class VirtualPetApplication {
         System.out.println("Welcome to Pounce's Play Palace & Pet Shelter! There are many things you can do with your robotic and organic pets, but first lets meet everyone:");
         shelter.meetAll();
         System.out.println("Please note that oil levels have been replaced with liquor for robots, taking after the deeply scientific works of Futurama.");
-        //TODO finish individual adoption game loop & fix the catch-alls.
+        //TODO finish individual adoption game loop and fix any minor issues, then remove #'s from status output
         System.out.println(" ");
         System.out.println("Shelter Commands:");
         System.out.println("All pets: 'play', 'meet', 'hydrate', 'recharge', 'adopt' or 'admit' a pet, and check everyone's 'status' ");
@@ -92,8 +92,8 @@ public class VirtualPetApplication {
                             shelter.playAll();
                             commandLoopy = false;
                         }
-                        else if (Integer.parseInt(userInput) > 0 && Integer.parseInt(userInput) <= shelter.getPetShelter().size()) {
-                            shelter.getPetShelter().get(Integer.parseInt(userInput) - 1).play();
+                        else if (shelter.isPetFound(userInput)) {
+                            shelter.petFinder(userInput).play();
                             commandLoopy = false;
                         }
                         else{
@@ -106,7 +106,7 @@ public class VirtualPetApplication {
                 case "feed":
                     commandLoopy = true;
                     while (commandLoopy){
-                        System.out.println("Type 'all' to feed all organic pets, or their room number to feed just one.");
+                        System.out.println("Type 'all' to feed all organic pets, or their name to feed just one.");
                         userInput = input.nextLine();
                         if (userInput.equalsIgnoreCase("quit")){
                             quitGame = true;
@@ -116,12 +116,12 @@ public class VirtualPetApplication {
                             shelter.feedAll();
                             commandLoopy = false;
                         }
-                        else if (Integer.parseInt(userInput) > 0 && Integer.parseInt(userInput) <= shelter.getPetShelter().size()) {
-                            if (shelter.getPetShelter().get(Integer.parseInt(userInput) - 1) instanceof Organic) {
-                                shelter.getPetShelter().get(Integer.parseInt(userInput) - 1).feed();
+                        else if (shelter.isPetFound(userInput)) {
+                            if (shelter.petFinder(userInput) instanceof Organic) {
+                                shelter.petFinder(userInput).feed();
                             }
                             else{
-                                System.out.println("You tried giving food to a robot, which is nonsense.");
+                                System.out.println("You tried giving food to a robot, which is complete nonsense.");
                             }
                             commandLoopy = false;
                         }
@@ -135,7 +135,7 @@ public class VirtualPetApplication {
                 case "walk":
                     commandLoopy = true;
                     while (commandLoopy){
-                        System.out.println("Type 'all' walk all the dogs, or their room number to take out just one.");
+                        System.out.println("Type 'all' walk all the dogs or the name of the pet to take on a solo walk.");
                         userInput = input.nextLine();
                         if (userInput.equalsIgnoreCase("quit")){
                             quitGame = true;
@@ -145,9 +145,9 @@ public class VirtualPetApplication {
                             shelter.walkDogs();
                             commandLoopy = false;
                         }
-                        else if (Integer.parseInt(userInput) > 0 && Integer.parseInt(userInput) <= shelter.getPetShelter().size()) {
-                            if (shelter.getPetShelter().get(Integer.parseInt(userInput) - 1) instanceof Walking) {
-                                ((Walking) shelter.getPetShelter().get(Integer.parseInt(userInput) - 1)).walk();
+                        else if (shelter.isPetFound(userInput)) {
+                            if (shelter.petFinder(userInput) instanceof Walking) {
+                                ((Walking) shelter.petFinder(userInput)).walk();
                             }
                             else{
                                 System.out.println("Woof -_-. You tried to take a cat on a walk, which clearly didn't work. ");
@@ -170,7 +170,7 @@ public class VirtualPetApplication {
                 case "nap":
                     commandLoopy = true;
                     while (commandLoopy){
-                        System.out.println("Type 'all' to nap with all organic pets, or their room number for an isolated nap.");
+                        System.out.println("Type 'all' to nap with all organic pets or a pet's name to let that one nap.");
                         userInput = input.nextLine();
                         if (userInput.equalsIgnoreCase("quit")){
                             quitGame = true;
@@ -180,9 +180,9 @@ public class VirtualPetApplication {
                             shelter.napTime();
                             commandLoopy = false;
                         }
-                        else if (Integer.parseInt(userInput) > 0 && Integer.parseInt(userInput) <= shelter.getPetShelter().size()) {
-                            if (shelter.getPetShelter().get(Integer.parseInt(userInput) - 1) instanceof Organic) {
-                                ((Organic) shelter.getPetShelter().get(Integer.parseInt(userInput) - 1)).nap();
+                        else if (shelter.isPetFound(userInput)) {
+                            if (shelter.petFinder(userInput) instanceof Organic) {
+                                ((Organic) shelter.petFinder(userInput)).nap();
                             }
                             else{
                                 System.out.println("Robots don't nap, but they might need to charge...");
@@ -199,7 +199,7 @@ public class VirtualPetApplication {
                 case "charge":
                     commandLoopy = true;
                     while (commandLoopy){
-                        System.out.println("Type 'all' to charge up all robits, or their room number for a single charger.");
+                        System.out.println("Type 'all' to charge up all robits, or their name for a single charger.");
                         userInput = input.nextLine();
                         if (userInput.equalsIgnoreCase("quit")){
                             quitGame = true;
@@ -209,9 +209,9 @@ public class VirtualPetApplication {
                             shelter.chargeAll();
                             commandLoopy = false;
                         }
-                        else if (Integer.parseInt(userInput) > 0 && Integer.parseInt(userInput) <= shelter.getPetShelter().size()) {
-                            if (shelter.getPetShelter().get(Integer.parseInt(userInput) - 1) instanceof Robotic) {
-                                ((Robotic) shelter.getPetShelter().get(Integer.parseInt(userInput) - 1)).charge();
+                        else if (shelter.isPetFound(userInput)) {
+                            if (shelter.petFinder(userInput) instanceof Robotic) {
+                                ((Robotic) shelter.petFinder(userInput)).charge();
                             }
                             else{
                                 System.out.println("OOPS. That doesn't plug into an organic pet, maybe try a nap instead...");
@@ -228,7 +228,7 @@ public class VirtualPetApplication {
                 case "maintenance":
                     commandLoopy = true;
                     while (commandLoopy){
-                        System.out.println("Type 'all' to fix up all the robots, or their room number to maintain just one pet.");
+                        System.out.println("Type 'all' to fix up all the robots, or their name to maintain just one pet.");
                         userInput = input.nextLine();
                         if (userInput.equalsIgnoreCase("quit")){
                             quitGame = true;
@@ -238,9 +238,9 @@ public class VirtualPetApplication {
                             shelter.maintainAll();
                             commandLoopy = false;
                         }
-                        else if (Integer.parseInt(userInput) > 0 && Integer.parseInt(userInput) <= shelter.getPetShelter().size()) {
-                            if (shelter.getPetShelter().get(Integer.parseInt(userInput) - 1) instanceof Robotic) {
-                                ((Robotic) shelter.getPetShelter().get(Integer.parseInt(userInput) - 1)).maintain();
+                        else if (shelter.isPetFound(userInput)) {
+                            if (shelter.petFinder(userInput) instanceof Robotic) {
+                                ((Robotic) shelter.petFinder(userInput)).maintain();
                             }
                             else{
                                 System.out.println("Maintenance is for robot pets only.");
@@ -257,7 +257,7 @@ public class VirtualPetApplication {
                 case "hydrate":
                     commandLoopy = true;
                     while (commandLoopy){
-                        System.out.println("Type 'all' to give all the pets a drink, or their room number to hydrate just one.");
+                        System.out.println("Type 'all' to give all the pets a drink, or their name to hydrate just one.");
                         userInput = input.nextLine();
                         if (userInput.equalsIgnoreCase("quit")){
                             quitGame = true;
@@ -267,8 +267,8 @@ public class VirtualPetApplication {
                             shelter.hydrateAll();
                             commandLoopy = false;
                         }
-                        else if (Integer.parseInt(userInput) > 0 && Integer.parseInt(userInput) <= shelter.getPetShelter().size()) {
-                            shelter.getPetShelter().get(Integer.parseInt(userInput) - 1).hydrate();
+                        else if (shelter.isPetFound(userInput)) {
+                            shelter.petFinder(userInput).hydrate();
                             commandLoopy = false;
                         }
                         else{
@@ -280,27 +280,24 @@ public class VirtualPetApplication {
                     break;
                 case "clean":
                     commandLoopy = true;
-                    while (commandLoopy){
-                        System.out.println("Type 'all' to clean the organic pet rooms, or a room number to clean up after just one.");
+                    while (commandLoopy) {
+                        System.out.println("Type 'all' to clean the organic pet rooms, or the pet's name to clean up after just one.");
                         userInput = input.nextLine();
-                        if (userInput.equalsIgnoreCase("quit")){
+                        if (userInput.equalsIgnoreCase("quit")) {
                             quitGame = true;
                             break;
                         }
                         if (userInput.equalsIgnoreCase("all")) {
                             shelter.cleanAll();
                             commandLoopy = false;
-                        }
-                        else if (Integer.parseInt(userInput) > 0 && Integer.parseInt(userInput) <= shelter.getPetShelter().size()) {
-                            if (shelter.getPetShelter().get(Integer.parseInt(userInput) - 1) instanceof Organic) {
-                                ((Organic) shelter.getPetShelter().get(Integer.parseInt(userInput) - 1)).cleanRoom();
-                            }
-                            else{
+                        } else if (shelter.isPetFound(userInput)) {
+                            if (shelter.petFinder(userInput) instanceof Organic) {
+                                ((Organic) shelter.petFinder(userInput)).cleanRoom();
+                            } else {
                                 System.out.println("Robots don't produce waste and therefore don't need their rooms' cleaned. How neat is that?!");
                             }
                             commandLoopy = false;
-                        }
-                        else{
+                        } else {
                             shelter.wrongCommand();
                         }
                     }
@@ -340,7 +337,7 @@ public class VirtualPetApplication {
                     }
                     else{
                         for(VirtualPet thisPet: shelter.getPetShelter()){
-                            if (thisPet.getAdoptionName().equalsIgnoreCase(userInput)){
+                            if (thisPet.getTrueName().equalsIgnoreCase(userInput)){
                                 adoptedPet = thisPet;
                                 System.out.println("Type 'leave' to take " + thisPet.getName() + " to their new fur-ever home, or 'stay' to stay at the shelter");
                                 userInput = input.nextLine();
