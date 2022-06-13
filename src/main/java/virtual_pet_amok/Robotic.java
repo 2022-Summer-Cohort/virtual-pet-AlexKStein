@@ -43,42 +43,42 @@ public abstract class Robotic extends VirtualPet{
             boredom = 0;
         }
         if (boredom >= 100){
-            boredom = 100;
-            boredomStatus = boredom + " >:(";
+            System.out.println(getName() + " trots off to play with their favorite toy.");
+            boredom = 50;
         }
-        if( boredom >=75 && boredom<100){
-            boredomStatus = boredom + " :(";
+        if( boredom >=75){
+            boredomStatus = ":(";
         }
         if (boredom >=50 && boredom <75){
-            boredomStatus = boredom + " :/";
+            boredomStatus = ":/";
         }
         if (boredom >=25 && boredom <50){
-            boredomStatus = boredom + " :)";
+            boredomStatus = ":)";
         }
         if (boredom < 25){
-            boredomStatus = boredom + " XD";
+            boredomStatus = "XD";
         }
 //energy
         if (energy <0){
             energy = 0;
-            energyStatus = energy + " >:(";
+            energyStatus = ">:(";
             System.out.println(getName() + " is out of energy! Please give them a 'charge' or some 'liquor'.");
         }
         if (energy >= 100){
             energy = 100;
-            energyStatus = energy + " XD";
+            energyStatus = "XD";
         }
         if( energy >=75 && energy<100){
-            energyStatus = energy + " :D";
+            energyStatus = ":D";
         }
         if (energy >=50 && energy <75){
-            energyStatus = energy + " :)";
+            energyStatus = ":)";
         }
         if (energy >=25 && energy <50){
-            energyStatus = energy + " :/";
+            energyStatus = ":/";
         }
         if (energy < 25){
-            energyStatus = energy + " :(";
+            energyStatus = ":(";
         }
 //thirst
         if (thirst <0){
@@ -86,19 +86,19 @@ public abstract class Robotic extends VirtualPet{
         }
         if (thirst >= 100){
             thirst = 100;
-            thirstStatus = thirst + " >:(";
+            thirstStatus = ">:(";
         }
         if( thirst >=75 && thirst<100){
-            thirstStatus = thirst + " :(";
+            thirstStatus = ":(";
         }
         if (thirst >=50 && thirst <75){
-            thirstStatus = thirst + " :/";
+            thirstStatus = ":/";
         }
         if (thirst >=25 && thirst <50){
-            thirstStatus = thirst + " :)";
+            thirstStatus = ":)";
         }
         if (thirst < 25){
-            thirstStatus = thirst + " XD";
+            thirstStatus = "XD";
         }
 //maintenance
         if (maintenance <0){
@@ -106,19 +106,19 @@ public abstract class Robotic extends VirtualPet{
         }
         if (maintenance >= 100){
             maintenance = 100;
-            maintenanceStatus = maintenance + " >:(";
+            maintenanceStatus = ">:(";
         }
         if( maintenance >=75 && maintenance<100){
-            maintenanceStatus = maintenance + " :(";
+            maintenanceStatus = ":(";
         }
         if (maintenance >=50 && maintenance <75){
-            maintenanceStatus = maintenance + " :/";
+            maintenanceStatus = ":/";
         }
         if (maintenance >=25 && maintenance <50){
-            maintenanceStatus = maintenance + " :)";
+            maintenanceStatus = ":)";
         }
         if (maintenance < 25){
-            maintenanceStatus = maintenance + " XD";
+            maintenanceStatus = "XD";
         }
 //output
         System.out.println(getNoise() + " ~ " + getName() + ": Energy = " + energyStatus +", Thirst = " + thirstStatus + ", Boredom = " + boredomStatus + ", Maintenance needs = " + maintenanceStatus + ".");

@@ -1,6 +1,9 @@
 package virtual_pet_amok;
 
 import java.util.Scanner;
+//TODO move around sout's to stop extra lines from printing,
+// then remove #'s from status output, add riot functionality.
+// Maybe update all methods to be abstract, return souts? reduce code on the App.
 
 public class VirtualPetApplication {
     public static void main(String[] args) {
@@ -50,14 +53,13 @@ public class VirtualPetApplication {
         System.out.println("Welcome to Pounce's Play Palace & Pet Shelter! There are many things you can do with your robotic and organic pets, but first lets meet everyone:");
         shelter.meetAll();
         System.out.println("Please note that oil levels have been replaced with liquor for robots, taking after the deeply scientific works of Futurama.");
-        //TODO finish individual adoption game loop and fix any minor issues, then remove #'s from status output
         System.out.println(" ");
         System.out.println("Shelter Commands:");
         System.out.println("All pets: 'play', 'meet', 'hydrate', 'recharge', 'adopt' or 'admit' a pet, and check everyone's 'status' ");
         System.out.println("Organic pets: 'feed', 'clean' their rooms or 'nap' for a quick snooze.");
         System.out.println("Robot pets: 'charge' and 'maintenance' ");
         System.out.println("Just the Doggos: 'walk' all the dogs (robots and organics)");
-        //Shelter loop
+//Shelter loop
         while (!quitGame){
 
             System.out.println("What would you like to do? Type 'help' for a list of commands or 'quit' anytime to exit.");
@@ -377,17 +379,217 @@ public class VirtualPetApplication {
         if (!adopt){
             System.out.println("Thanks for visiting Pounce's Pet Palace, have a great day!");
         }
-
-        //single pet adoption loop
-        while (adopt){
-
-            String userInput = input.nextLine();
-            switch (userInput.toLowerCase()) {
-                case "quit":
-                    adopt = false;
-                    break;
-                default:
-                    adoptedPet.wrongCommand();
+//single pet adoption loops
+        //organic dog
+        if (adopt && adoptedPet.getType().equalsIgnoreCase("Organic Dog")){
+            System.out.println("Welcome to your new fur-ever home, " + adoptedPet.getName() +"!");
+            adoptedPet.help();
+            while(adopt) {
+                System.out.println("What would you like? Type 'help' for a list of activities or 'quit' to quit.");
+                String userInput = input.nextLine();
+                switch (userInput.toLowerCase()) {
+                    case "quit":
+                        adopt = false;
+                        break;
+                    case "help":
+                        adoptedPet.help();
+                        break;
+                    case "play":
+                        adoptedPet.play();
+                        adoptedPet.tick();
+                        adoptedPet.status();
+                        break;
+                    case "feed":
+                        adoptedPet.feed();
+                        adoptedPet.tick();
+                        adoptedPet.status();
+                        break;
+                    case "nap":
+                        ((Organic)adoptedPet).nap();
+                        adoptedPet.tick();
+                        adoptedPet.status();
+                        break;
+                    case "walk":
+                        ((Walking)adoptedPet).walk();
+                        adoptedPet.tick();
+                        adoptedPet.status();
+                        break;
+                    case "hydrate":
+                        adoptedPet.hydrate();
+                        adoptedPet.tick();
+                        adoptedPet.status();
+                        break;
+                    case "clean":
+                        ((Organic)adoptedPet).cleanRoom();
+                        adoptedPet.tick();
+                        adoptedPet.status();
+                        break;
+                    case "meet":
+                        adoptedPet.meet();
+                        adoptedPet.tick();
+                        adoptedPet.status();
+                        break;
+                    case "status":
+                        adoptedPet.status();
+                        break;
+                    default:
+                        adoptedPet.wrongCommand();
+                        break;
+                }
+            }
+        }
+        //Robot Dog
+        if (adopt && adoptedPet.getType().equalsIgnoreCase("Robot Dog")) {
+            System.out.println("Welcome to your new fur-ever home, " + adoptedPet.getName() + "!");
+            adoptedPet.help();
+            while (adopt) {
+                System.out.println("What would you like? Type 'help' for a list of activities or 'quit' to quit.");
+                String userInput = input.nextLine();
+                switch (userInput.toLowerCase()) {
+                    case "quit":
+                        adopt = false;
+                        break;
+                    case "help":
+                        adoptedPet.help();
+                        break;
+                    case "play":
+                        adoptedPet.play();
+                        adoptedPet.tick();
+                        adoptedPet.status();
+                        break;
+                    case "hydrate":
+                        adoptedPet.hydrate();
+                        adoptedPet.tick();
+                        adoptedPet.status();
+                        break;
+                    case "walk":
+                        ((Walking) adoptedPet).walk();
+                        adoptedPet.tick();
+                        adoptedPet.status();
+                        break;
+                    case "charge":
+                        ((Robotic)adoptedPet).charge();
+                        adoptedPet.tick();
+                        adoptedPet.status();
+                        break;
+                    case "maintain":
+                        ((Robotic)adoptedPet).maintain();
+                        adoptedPet.tick();
+                        adoptedPet.status();
+                        break;
+                    case "meet":
+                        adoptedPet.meet();
+                        adoptedPet.tick();
+                        adoptedPet.status();
+                        break;
+                    case "status":
+                        adoptedPet.status();
+                        break;
+                    default:
+                        adoptedPet.wrongCommand();
+                        break;
+                }
+            }
+        }
+        //Organic Cat
+        if (adopt && adoptedPet.getType().equalsIgnoreCase("Organic cat")){
+            System.out.println("Welcome to your new fur-ever home, " + adoptedPet.getName() +"!");
+            adoptedPet.help();
+            while(adopt) {
+                System.out.println("What would you like? Type 'help' for a list of activities or 'quit' to quit.");
+                String userInput = input.nextLine();
+                switch (userInput.toLowerCase()) {
+                    case "quit":
+                        adopt = false;
+                        break;
+                    case "help":
+                        adoptedPet.help();
+                        break;
+                    case "play":
+                        adoptedPet.play();
+                        adoptedPet.tick();
+                        adoptedPet.status();
+                        break;
+                    case "feed":
+                        adoptedPet.feed();
+                        adoptedPet.tick();
+                        adoptedPet.status();
+                        break;
+                    case "nap":
+                        ((Organic)adoptedPet).nap();
+                        adoptedPet.tick();
+                        adoptedPet.status();
+                        break;
+                    case "hydrate":
+                        adoptedPet.hydrate();
+                        adoptedPet.tick();
+                        adoptedPet.status();
+                        break;
+                    case "clean":
+                        ((Organic)adoptedPet).cleanRoom();
+                        adoptedPet.tick();
+                        adoptedPet.status();
+                        break;
+                    case "meet":
+                        adoptedPet.meet();
+                        adoptedPet.tick();
+                        adoptedPet.status();
+                        break;
+                    case "status":
+                        adoptedPet.status();
+                        break;
+                    default:
+                        adoptedPet.wrongCommand();
+                        break;
+                }
+            }
+        }
+        //Robot Cat
+        if (adopt && adoptedPet.getType().equalsIgnoreCase("robot cat")) {
+            System.out.println("Welcome to your new fur-ever home, " + adoptedPet.getName() + "!");
+            adoptedPet.help();
+            while (adopt) {
+                System.out.println("What would you like? Type 'help' for a list of activities or 'quit' to quit.");
+                String userInput = input.nextLine();
+                switch (userInput.toLowerCase()) {
+                    case "quit":
+                        adopt = false;
+                        break;
+                    case "help":
+                        adoptedPet.help();
+                        break;
+                    case "play":
+                        adoptedPet.play();
+                        adoptedPet.tick();
+                        adoptedPet.status();
+                        break;
+                    case "hydrate":
+                        adoptedPet.hydrate();
+                        adoptedPet.tick();
+                        adoptedPet.status();
+                        break;
+                    case "charge":
+                        ((Robotic)adoptedPet).charge();
+                        adoptedPet.tick();
+                        adoptedPet.status();
+                        break;
+                    case "maintain":
+                        ((Robotic)adoptedPet).maintain();
+                        adoptedPet.tick();
+                        adoptedPet.status();
+                        break;
+                    case "meet":
+                        adoptedPet.meet();
+                        adoptedPet.tick();
+                        adoptedPet.status();
+                        break;
+                    case "status":
+                        adoptedPet.status();
+                        break;
+                    default:
+                        adoptedPet.wrongCommand();
+                        break;
+                }
             }
         }
     }

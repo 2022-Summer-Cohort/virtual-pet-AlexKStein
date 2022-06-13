@@ -41,40 +41,40 @@ public class OrganicCat extends Organic{
         }
         if (boredom >= 100){
             boredom = 100;
-            boredomStatus = boredom + " >:(";
+            boredomStatus = ">:(";
         }
         if( boredom >=75 && boredom<100){
-            boredomStatus = boredom + " :(";
+            boredomStatus = ":(";
         }
         if (boredom >=50 && boredom <75){
-            boredomStatus = boredom + " :/";
+            boredomStatus = ":/";
         }
         if (boredom >=25 && boredom <50){
-            boredomStatus = boredom + " :)";
+            boredomStatus = ":)";
         }
         if (boredom < 25){
-            boredomStatus = boredom + " XD";
+            boredomStatus = "XD";
         }
 //energy
         if (energy <0){
             energy = 0;
-            energyStatus = energy + " >:(";
+            energyStatus = ">:(";
         }
         if (energy >= 100){
             energy = 100;
-            energyStatus = energy + " XD";
+            energyStatus = "XD";
         }
         if( energy >=75 && energy<100){
-            energyStatus = energy + " :D";
+            energyStatus = ":D";
         }
         if (energy >=50 && energy <75){
-            energyStatus = energy + " :)";
+            energyStatus = ":)";
         }
         if (energy >=25 && energy <50){
-            energyStatus = energy + " :/";
+            energyStatus = ":/";
         }
         if (energy < 25){
-            energyStatus = energy + " :(";
+            energyStatus = ":(";
         }
 //thirst
         if (thirst <0){
@@ -82,19 +82,19 @@ public class OrganicCat extends Organic{
         }
         if (thirst >= 100){
             thirst = 100;
-            thirstStatus = thirst + " >:(";
+            thirstStatus = ">:(";
         }
         if( thirst >=75 && thirst<100){
-            thirstStatus = thirst + " :(";
+            thirstStatus = ":(";
         }
         if (thirst >=50 && thirst <75){
-            thirstStatus = thirst + " :/";
+            thirstStatus = ":/";
         }
         if (thirst >=25 && thirst <50){
-            thirstStatus = thirst + " :)";
+            thirstStatus = ":)";
         }
         if (thirst < 25){
-            thirstStatus = thirst + " XD";
+            thirstStatus = "XD";
         }
 //hunger
         if (hunger <0){
@@ -102,19 +102,19 @@ public class OrganicCat extends Organic{
         }
         if (hunger >= 100){
             hunger = 100;
-            hungerStatus = hunger + " >:(";
+            hungerStatus = ">:(";
         }
         if( hunger >=75 && hunger<100){
-            hungerStatus = hunger + " :(";
+            hungerStatus = ":(";
         }
         if (hunger >=50 && hunger <75){
-            hungerStatus = hunger + " :/";
+            hungerStatus = ":/";
         }
         if (hunger >=25 && hunger <50){
-            hungerStatus = hunger + " :)";
+            hungerStatus = ":)";
         }
         if (hunger < 25){
-            hungerStatus = hunger + " XD";
+            hungerStatus = "XD";
         }
 //bathroom
         if (bathroom <0){
@@ -131,16 +131,16 @@ public class OrganicCat extends Organic{
             }
         }
         if( bathroom >=75){
-            bathroomStatus = " :(";
+            bathroomStatus = ":(";
         }
         if (bathroom >=50 && bathroom <75){
             bathroomStatus = ":/";
         }
         if (bathroom >=25 && bathroom <50){
-            bathroomStatus = bathroom + ":)";
+            bathroomStatus = ":)";
         }
         if (bathroom < 25){
-            bathroomStatus = bathroom + "XD";
+            bathroomStatus = "XD";
         }
 //output
         System.out.println(getNoise() + " ~ " + getName() + ": Hunger = " + hungerStatus +", Thirst = " + thirstStatus + ", Energy = " + energyStatus +", Boredom = " + boredomStatus + ", Bathroom needs = " + bathroomStatus + ", litter box = " + getLitter() + "/4.");
@@ -151,5 +151,9 @@ public class OrganicCat extends Organic{
         boredom -= 50;
         energy -= 25;
         thirst += 15;
+    }
+    @Override
+    public void help(){
+        System.out.println("You can 'play', 'feed', 'nap', 'hydrate', 'clean' their litter box, 'meet' and check the 'status' of your pet.");
     }
 }

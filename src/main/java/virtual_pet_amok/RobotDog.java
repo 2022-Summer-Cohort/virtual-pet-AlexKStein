@@ -20,5 +20,9 @@ public class RobotDog extends Robotic implements Walking{
         thirst += 25;
 
     }
+    @Override
+    public void help(){
+        System.out.println("You can 'play', 'walk', 'hydrate', 'charge', 'maintain' your robot buddy, 'meet' and check the 'status' of your pet.");
+    }
 
 }

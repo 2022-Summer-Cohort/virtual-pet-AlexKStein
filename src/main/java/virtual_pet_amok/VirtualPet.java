@@ -7,7 +7,7 @@ public abstract class VirtualPet {
     protected int boredom;
     protected int energy; //this will be used for robot charge and organic sleepiness.
     protected int thirst; //liquor replaces oil. see game for details
-    private boolean riot; //true will make pet unresponsive until an issue is fixed.
+    protected boolean riot; //true will make pet unresponsive until an issue is fixed.
     private String trueName;
 
     public String getName() {
@@ -64,4 +64,5 @@ public abstract class VirtualPet {
     public abstract void status();
     public abstract void feed();
     public abstract void hydrate();
+    public abstract void help();
 }
