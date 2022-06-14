@@ -2,15 +2,15 @@ package virtual_pet_amok;
 
 public class OrganicCat extends Organic{
     private int litter = 0;
-    public OrganicCat(String name, String type, String noise, int boredom, int energy, int thirst, boolean riot, int hunger, boolean clean, int bathroom, int litter) {
-        super(name, type, noise, boredom, energy, thirst,riot, hunger, clean, bathroom);
+    public OrganicCat(String name, String type, String noise, int boredom, int energy, int thirst, boolean tooTired, int hunger, boolean clean, int bathroom, boolean tooHungry, int litter) {
+        super(name, type, noise, boredom, energy, thirst, tooTired, hunger, clean, bathroom, tooHungry);
         this.litter = litter;
     }
 
     public int getLitter(){ return litter; }
     public void litterBox(){
         litter++;
-        if (litter >=4){
+        if (litter >=3){
             clean = false;
         }
     }
@@ -22,14 +22,17 @@ public class OrganicCat extends Organic{
     }
     @Override
     public void feed(){
-        if (getHunger()<25){
-            System.out.println(getName() + " is not hungry enough to eat.");
-        }
-        else {
-            System.out.println(getNoise() + "! " + getName() + " is no longer hunger and has more energy.");
-            hunger -= 75;
-            energy += 50;
-            bathroom += 20;
+        if (!isClean() && !isTooHungry()){
+            System.out.println(getName() + " doesn't seem to be hungry, but still needs something.");
+        }else {
+            if (getHunger() < 25) {
+                System.out.println(getName() + " is not hungry enough to eat.");
+            } else {
+                System.out.println(getNoise() + "! " + getName() + " is no longer hunger and has more energy.");
+                hunger -= 75;
+                energy += 50;
+                bathroom += 20;
+            }
         }
     }
     private String boredomStatus; private String energyStatus; private String thirstStatus; private String hungerStatus; private String bathroomStatus;
@@ -41,7 +44,8 @@ public class OrganicCat extends Organic{
         }
         if (boredom >= 100){
             boredom = 100;
-            boredomStatus = ">:(";
+            System.out.println(getName() + " chases a beam of light for a bit and is less bored.");
+            play();
         }
         if( boredom >=75 && boredom<100){
             boredomStatus = ":(";
@@ -58,7 +62,8 @@ public class OrganicCat extends Organic{
 //energy
         if (energy <0){
             energy = 0;
-            energyStatus = ">:(";
+            System.out.println("This kitty is too tired: " + getName() + " lies down for a quick nappy.");
+            nap();
         }
         if (energy >= 100){
             energy = 100;
@@ -82,7 +87,7 @@ public class OrganicCat extends Organic{
         }
         if (thirst >= 100){
             thirst = 100;
-            thirstStatus = ">:(";
+            hydrate();
         }
         if( thirst >=75 && thirst<100){
             thirstStatus = ":(";
@@ -103,6 +108,8 @@ public class OrganicCat extends Organic{
         if (hunger >= 100){
             hunger = 100;
             hungerStatus = ">:(";
+            System.out.println(getName() + " won't cooperate until they get some food!");
+            tooHungry = true;
         }
         if( hunger >=75 && hunger<100){
             hungerStatus = ":(";
@@ -147,10 +154,13 @@ public class OrganicCat extends Organic{
     }
     @Override
     public void play() {
-        System.out.println("*" + getNoise() + "* " + getName() + " happily plays with you :3");
-        boredom -= 50;
-        energy -= 25;
-        thirst += 15;
+        if(!isClean() || isTooHungry()){
+            System.out.println(getName() + " isn't listening, maybe they need something?");
+        } else {
+            boredom -= 50;
+            energy -= 25;
+            thirst += 15;
+        }
     }
     @Override
     public void help(){

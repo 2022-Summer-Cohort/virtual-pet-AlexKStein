@@ -4,11 +4,14 @@ public abstract class Organic extends VirtualPet {
     protected int hunger;
     protected boolean clean;
     protected int bathroom;
-    public Organic(String name, String type, String noise, int boredom, int energy, int thirst, boolean riot, int hunger, boolean clean, int bathroom) {
-        super(name, type, noise, boredom, energy, thirst, riot);
+    protected boolean tooHungry;
+
+    public Organic(String name, String type, String noise, int boredom, int energy, int thirst, boolean tooTired, int hunger, boolean clean, int bathroom, boolean tooHungry) {
+        super(name, type, noise, boredom, energy, thirst, tooTired);
         this.hunger = hunger;
         this.clean = clean;
         this.bathroom = bathroom;
+        this.tooHungry = tooHungry;
     }
     //getters
     public int getHunger() {
@@ -20,23 +23,32 @@ public abstract class Organic extends VirtualPet {
     public int getBathroom() {
         return bathroom;
     }
-    //emoji modifiers for status
+    public boolean isTooHungry() { return tooHungry; }
 
 
     @Override
     public void hydrate(){
-        System.out.println(getName() + " drinks some water and is less thirsty.");
-        thirst -=50;
-        bathroom +=15;
-        energy += 10;
+        if (isTooHungry() || !isClean()){
+            System.out.println(getName() + " is not listening, maybe they need something?");
+        }
+        else {
+            System.out.println(getName() + " drinks some water and is less thirsty.");
+            thirst -= 50;
+            bathroom += 15;
+            energy += 10;
+        }
     }
     public void nap(){
-        System.out.println(getName() + "(Zzz...) After a nice nap and a biiiig stretch, they're no longer tired and full of energy again!");
-        energy=100;
-        bathroom+=25;
+        if (isTooHungry() || !isClean()){
+            System.out.println(getName() + " is not listening, maybe they need something?");
+        } else {
+            System.out.println(getName() + "(Zzz...) After a nice nap and a biiiig stretch, they're no longer tired and is full of energy again!");
+            energy = 100;
+            bathroom += 25;
+        }
     }
     public void cleanRoom(){
-        System.out.println(getName() +"'s room and/or litter box is now clean.");
+        System.out.println(getName() + "'s room and/or litter box is now clean.");
         clean = true;
     }
 

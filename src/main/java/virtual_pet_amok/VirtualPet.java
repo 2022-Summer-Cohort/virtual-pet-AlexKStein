@@ -7,8 +7,9 @@ public abstract class VirtualPet {
     protected int boredom;
     protected int energy; //this will be used for robot charge and organic sleepiness.
     protected int thirst; //liquor replaces oil. see game for details
-    protected boolean riot; //true will make pet unresponsive until an issue is fixed.
+    protected boolean tooTired;
     private String trueName;
+
 
     public String getName() {
         return name;
@@ -28,11 +29,12 @@ public abstract class VirtualPet {
     public int getThirst() {
         return thirst;
     }
-    public boolean isRiot() { return riot;}
+    public boolean isTooTired() { return tooTired;}
     public String getTrueName(){ return trueName; }
 
 
-    public VirtualPet(String name, String type, String noise, int boredom, int energy, int thirst, boolean riot) {
+    public VirtualPet(String name, String type, String noise, int boredom, int energy, int thirst,
+                      boolean tooTired) {
         this.trueName = name;
         if (type.equalsIgnoreCase("robot dog")){
             this.name = name + " ~U*ᴥ*U~";
@@ -51,7 +53,7 @@ public abstract class VirtualPet {
         this.boredom = boredom;
         this.energy = energy;
         this.thirst = thirst;
-        this.riot = riot;
+        this.tooTired = tooTired;
     }
     public void wrongCommand(){
         System.out.println(getNoise() + "!! " + getName() + " is trying to tell you that you typed something wrong...");

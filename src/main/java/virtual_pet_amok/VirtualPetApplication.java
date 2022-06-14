@@ -1,9 +1,6 @@
 package virtual_pet_amok;
 
 import java.util.Scanner;
-//TODO move around sout's to stop extra lines from printing,
-// then remove #'s from status output, add riot functionality.
-// Maybe update all methods to be abstract, return souts? reduce code on the App.
 
 public class VirtualPetApplication {
     public static void main(String[] args) {
@@ -44,10 +41,10 @@ public class VirtualPetApplication {
                 "                                         '--._|___|     |__|\n");
 
         //Welcome! Shelter & pet intros
-        OrganicDog frodo = new OrganicDog("Frodo", "organic Dog", "Bark", 0, 100, 0,false, 0, true, 0);
-        RobotDog bilbo = new RobotDog("Bilbo", "robot dog", "zzWoOfzz", 0,100,0,false,0);
-        OrganicCat samwise = new OrganicCat("Samwise", "organic cat", "meow", 0, 100, 0, false, 0, true, 0, 0);
-        RobotCat gandalf = new RobotCat("Gandalf", "robot cat", "MeowZzza", 0, 100, 0, false, 0);
+        OrganicDog frodo = new OrganicDog("Frodo", "organic Dog", "Bark", 0, 100, 0,false,  0, true, 0, false);
+        RobotDog bilbo = new RobotDog("Bilbo", "robot dog", "zzWoOfzz", 0,100,0,false,  0, false, false);
+        OrganicCat samwise = new OrganicCat("Samwise", "organic cat", "meow", 0, 100, 0, false, 0, true, 0, false, 0);
+        RobotCat gandalf = new RobotCat("Gandalf", "robot cat", "MeowZzza", 0, 100, 0, false,  0, false,false);
         //admit starting pets
         shelter.admitRD(bilbo); shelter.admitOD(frodo); shelter.admitOC(samwise); shelter.admitRC(gandalf);
         System.out.println("Welcome to Pounce's Play Palace & Pet Shelter! There are many things you can do with your robotic and organic pets, but first lets meet everyone:");
@@ -91,11 +88,13 @@ public class VirtualPetApplication {
                             break;
                         }
                         if (userInput.equalsIgnoreCase("all")) {
+                            System.out.println("Wagging tails and Happy meows!");
                             shelter.playAll();
                             commandLoopy = false;
                         }
                         else if (shelter.isPetFound(userInput)) {
                             shelter.petFinder(userInput).play();
+                            System.out.println(userInput + " loved playing with you.");
                             commandLoopy = false;
                         }
                         else{
@@ -312,16 +311,16 @@ public class VirtualPetApplication {
                     System.out.println("And what type of animal are they (ie. 'robot dog' or 'organic cat'");
                     String newPetType = input.nextLine();
                     if (newPetType.equalsIgnoreCase("robot dog")){
-                            shelter.admitRD(new RobotDog(newPetName, newPetType, "Woofz", 0, 100, 0, false, 0));
+                            shelter.admitRD(new RobotDog(newPetName, newPetType, "Woofz", 0, 100, 0, false,  0, false, false));
                         }
                     else if (newPetType.equalsIgnoreCase("robot cat")) {
-                        shelter.admitRC(new RobotCat(newPetName, newPetType, "MeowzZa", 0, 100, 0, false,0));
+                        shelter.admitRC(new RobotCat(newPetName, newPetType, "MeowzZa", 0, 100, 0, false, 0, false, false));
                         }
                     else if(newPetType.equalsIgnoreCase("organic dog")){
-                        shelter.admitOD(new OrganicDog(newPetName, newPetType, "Woof", 0, 100, 0, false, 0, true, 0));
+                        shelter.admitOD(new OrganicDog(newPetName, newPetType, "Woof", 0, 100, 0, false,  0, true, 0, false));
                     }
                     else if (newPetType.equalsIgnoreCase("organic cat")){
-                        shelter.admitOC(new OrganicCat(newPetName, newPetType, "Meow", 0, 100, 0, false, 0, true, 0, 0));
+                        shelter.admitOC(new OrganicCat(newPetName, newPetType, "Meow", 0, 100, 0, false, 0, true, 0, false, 0));
                     }
                     else {
                         System.out.println("Pet type not recognized. Type 'admit' to try again or...");
@@ -395,6 +394,7 @@ public class VirtualPetApplication {
                         adoptedPet.help();
                         break;
                     case "play":
+                        System.out.println(adoptedPet.getName() + "'s tail is wagging and happily plays with you. " + adoptedPet.getNoise() + "!");
                         adoptedPet.play();
                         adoptedPet.tick();
                         adoptedPet.status();
@@ -453,6 +453,7 @@ public class VirtualPetApplication {
                         adoptedPet.help();
                         break;
                     case "play":
+                        System.out.println(adoptedPet.getName() + "'s lil' tail is wagging & is so excited to play with you! " +adoptedPet.getNoise());
                         adoptedPet.play();
                         adoptedPet.tick();
                         adoptedPet.status();
@@ -506,6 +507,7 @@ public class VirtualPetApplication {
                         adoptedPet.help();
                         break;
                     case "play":
+                        System.out.println("*" + adoptedPet.getNoise() + "* " + adoptedPet.getName() + " happily plays with you :3");
                         adoptedPet.play();
                         adoptedPet.tick();
                         adoptedPet.status();
@@ -559,6 +561,7 @@ public class VirtualPetApplication {
                         adoptedPet.help();
                         break;
                     case "play":
+                        System.out.println(adoptedPet.getName() + " happily plays with you :3");
                         adoptedPet.play();
                         adoptedPet.tick();
                         adoptedPet.status();

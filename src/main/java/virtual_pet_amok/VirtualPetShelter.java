@@ -11,7 +11,9 @@ public class VirtualPetShelter {
     public ArrayList<VirtualPet> getPetShelter() {
         return petShelter;
     }
-
+    public void riotOut(VirtualPet thisPet){
+        System.out.println(thisPet.getName() + " is being uncooperative, maybe they need something?");
+    }
 //Admit pets
     public void admitRD(RobotDog thisPet) {
         petShelter.add(thisPet);
@@ -43,7 +45,7 @@ public class VirtualPetShelter {
                 return thisPet;
             }
         }
-        System.out.println("Pet not found.");;
+        System.out.println("Pet not found.");
         return null;
     }
     public void wrongCommand(){
@@ -63,7 +65,11 @@ public class VirtualPetShelter {
     }
     public void feedAll(){
         for(VirtualPet thisPet: petShelter){
-            thisPet.feed();
+            if(thisPet.isTooTired()){
+                riotOut(thisPet);
+            } else {
+                thisPet.feed();
+            }
         }
     }
     public void chargeAll(){
@@ -128,31 +134,31 @@ public class VirtualPetShelter {
     }
     public void randomEvent(){
         int chanceNum = (int) (Math.random()*25);
-//        switch (chanceNum) {
-//            case 0:     System.out.print("[Random Event]");
-//                System.out.println("Nap time?!? Organics are snoozing while the Robits plug in for their own nap.");
-//                chargeAndNap();
-//                break;
-//            case 1:     System.out.print("[Random Event]");
-//                System.out.println("CHAOS! All the animals are romping, but they're definitely not bored anymore");
-//                playAll();
-//                break;
-//            case 2:     System.out.print("[Random Event]");
-//
-//                VirtualPet pet1 = petShelter.get((int)(Math.random()*petShelter.size()));
-//                VirtualPet pet2 = petShelter.get((int)(Math.random()*petShelter.size()));
-//                pet1.play(); pet2.play();
-//                System.out.println(pet1.getName() + " and " + pet2.getName() + " are playing together c:");
-//                break;
-//            case 3:     System.out.print("[Random Event]");
-//                pet1 = petShelter.get((int)(Math.random()*petShelter.size()));
-//                pet2 = petShelter.get((int)(Math.random()*petShelter.size()));
-//                VirtualPet pet3 = petShelter.get((int)(Math.random()*petShelter.size()));
-//                pet1.play(); pet2.play(); pet3.play();
-//                System.out.println(pet1.getName() + ", " + pet2.getName() + " and " + pet3.getName() + " are all playing together c:");
-//                break;
-//            default:
-//                break;
-//        }
+        switch (chanceNum) {
+            case 0:     System.out.print("[Random Event]");
+                System.out.println("Nap time?!? Organics are snoozing while the Robits plug in for their own nap.");
+                chargeAndNap();
+                break;
+            case 1:     System.out.print("[Random Event]");
+                System.out.println("CHAOS! All the animals are romping, but they're definitely not bored anymore");
+                playAll();
+                break;
+            case 2:     System.out.print("[Random Event]");
+
+                VirtualPet pet1 = petShelter.get((int)(Math.random()*petShelter.size()));
+                VirtualPet pet2 = petShelter.get((int)(Math.random()*petShelter.size()));
+                pet1.play(); pet2.play();
+                System.out.println(pet1.getName() + " and " + pet2.getName() + " are playing together c:");
+                break;
+            case 3:     System.out.print("[Random Event]");
+                pet1 = petShelter.get((int)(Math.random()*petShelter.size()));
+                pet2 = petShelter.get((int)(Math.random()*petShelter.size()));
+                VirtualPet pet3 = petShelter.get((int)(Math.random()*petShelter.size()));
+                pet1.play(); pet2.play(); pet3.play();
+                System.out.println(pet1.getName() + ", " + pet2.getName() + " and " + pet3.getName() + " are all playing together c:");
+                break;
+            default:
+                break;
+        }
     }
 }

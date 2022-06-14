@@ -2,38 +2,58 @@ package virtual_pet_amok;
 
 public abstract class Robotic extends VirtualPet{
     protected int maintenance;
-    public Robotic(String name, String type, String noise, int boredom, int energy, int thirst, boolean riot, int maintenance) {
-        super(name, type, noise, boredom, energy, thirst, riot);
+    protected boolean needsMaintenance;
+    protected boolean tooThirsty;
+
+    public Robotic(String name, String type, String noise, int boredom, int energy, int thirst, boolean tooTired, int maintenance, boolean tooThirsty, boolean needsMaintenance) {
+        super(name, type, noise, boredom, energy, thirst, tooTired);
         this.maintenance = maintenance;
+        this.needsMaintenance = needsMaintenance;
+        this.tooThirsty = tooThirsty;
     }
+
     public int getMaintenance() {
         return maintenance;
     }
-    //emoji modifiers for status
+    public boolean isNeedsMaintenance() {
+        return needsMaintenance;
+    }
+    public boolean isTooThirsty() {
+        return tooThirsty;
+    }
+
     private String boredomStatus; private String energyStatus; private String thirstStatus; private String maintenanceStatus;
 
     public void charge(){
-        System.out.println(getName() + " is fully charged! " + getNoise());
-        energy = 100;
-        maintenance+=15;
+        if ((isNeedsMaintenance() || isTooThirsty()) && !isTooTired()){
+            System.out.println(getName() + " is not listening, maybe they need something");
+        } else {
+            System.out.println(getName() + " is fully charged! " + getNoise());
+            energy = 100;
+            maintenance += 15;
+        }
     }
     @Override
     public void hydrate(){
-        System.out.println("I'm " + getName() + ", baby! Please insert liquor...");
-        double roll = Math.random()*11;
-        if (roll <=3){
-            System.out.print("Yum! Tequila. ");
+        if (isNeedsMaintenance() && !isTooThirsty()){
+            System.out.println(getName() + " is not listening, maybe they're broken...?");
+        } else {
+            System.out.println("I'm " + getName() + ", baby! Please insert liquor...");
+            double roll = Math.random() * 11;
+            if (roll <= 3) {
+                System.out.print("Yum! Tequila. ");
+            }
+            if (roll > 3 && roll <= 7) {
+                System.out.print("Thanks for the beers! ");
+            }
+            if (roll > 7) {
+                System.out.print("Mmm, fine fine wine. ");
+            }
+            System.out.println(getName() + "'s liquor needs have been met and they have more energy now, too!");
+            energy += 50;
+            thirst = 0;
+            maintenance += 15;
         }
-        if (roll >3 && roll<=7){
-            System.out.print("Thanks for the beers! ");
-        }
-        if (roll >7){
-            System.out.print("Mmm, fine fine wine. ");
-        }
-        System.out.println(getName() + "'s liquor needs have been met and they have more energy now, too!");
-        energy +=50;
-        thirst =0;
-        maintenance +=15;
     }
 
     @Override
@@ -44,7 +64,7 @@ public abstract class Robotic extends VirtualPet{
         }
         if (boredom >= 100){
             System.out.println(getName() + " trots off to play with their favorite toy.");
-            boredom = 50;
+            play();
         }
         if( boredom >=75){
             boredomStatus = ":(";
@@ -63,6 +83,7 @@ public abstract class Robotic extends VirtualPet{
             energy = 0;
             energyStatus = ">:(";
             System.out.println(getName() + " is out of energy! Please give them a 'charge' or some 'liquor'.");
+            tooTired = true;
         }
         if (energy >= 100){
             energy = 100;
@@ -86,6 +107,8 @@ public abstract class Robotic extends VirtualPet{
         }
         if (thirst >= 100){
             thirst = 100;
+            System.out.println(getName() + " is in desperate need of liquor.");
+            tooThirsty = true;
             thirstStatus = ">:(";
         }
         if( thirst >=75 && thirst<100){
@@ -107,6 +130,8 @@ public abstract class Robotic extends VirtualPet{
         if (maintenance >= 100){
             maintenance = 100;
             maintenanceStatus = ">:(";
+            System.out.println(getName() + " isn't looking too good...");
+            needsMaintenance = true;
         }
         if( maintenance >=75 && maintenance<100){
             maintenanceStatus = ":(";
@@ -135,9 +160,13 @@ public abstract class Robotic extends VirtualPet{
     public void feed(){ }
 
     public void maintain() {
-        System.out.println("Now that you've fixed up " + getName() + ", don't forget to check their energy levels!");
-        energy -= 50;
-        boredom += 15;
-        thirst +=25;
+        if ((isTooTired() || isTooThirsty()) && !isNeedsMaintenance()){
+            System.out.println(getName() + " seems to be working fine, maybe they need something else.");
+        } else {
+            System.out.println("Now that you've fixed up " + getName() + ", don't forget to check their energy levels!");
+            energy -= 50;
+            boredom += 15;
+            thirst += 25;
+        }
     }
 }

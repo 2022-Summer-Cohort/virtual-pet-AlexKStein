@@ -2,15 +2,19 @@ package virtual_pet_amok;
 
 public class OrganicDog extends Organic implements Walking{
 
-    public OrganicDog(String name, String type, String noise, int boredom, int energy, int thirst, boolean riot, int hunger, boolean clean, int bathroom) {
-        super(name, type, noise, boredom, energy, thirst, riot, hunger, clean, bathroom);
+    public OrganicDog(String name, String type, String noise, int boredom, int energy, int thirst, boolean tooTired, int hunger, boolean clean, int bathroom, boolean tooHungry) {
+        super(name, type, noise, boredom, energy, thirst,tooTired, hunger, clean, bathroom, tooHungry);
     }
     public void walk(){
-        System.out.println(getName() + " went on a walk, went potty and is less bored!");
-        boredom -=50;
-        energy -=20;
-        thirst +=15;
-        bathroom = 0;
+        if(isTooHungry() && getBathroom()<75){
+            System.out.println(getName() + " isn't listening. Maybe they need something.");
+        } else {
+            System.out.println(getName() + " went on a walk, went potty and is less bored!");
+            boredom -= 50;
+            energy -= 20;
+            thirst += 15;
+            bathroom = 0;
+        }
     }
     private String boredomStatus; private String energyStatus; private String thirstStatus; private String hungerStatus; private String bathroomStatus;
 
@@ -23,9 +27,10 @@ public class OrganicDog extends Organic implements Walking{
     }
         if (boredom >= 100){
         boredom = 100;
-        boredomStatus = ">:(";
+        System.out.println(getName() + " gets bored with you and wrestles with a toy.");
+        play();
     }
-        if( boredom >=75 && boredom<100){
+        if( boredom >=75){
         boredomStatus = ":(";
     }
         if (boredom >=50 && boredom <75){
@@ -40,7 +45,7 @@ public class OrganicDog extends Organic implements Walking{
 //energy
         if (energy <0){
         energy = 0;
-        energyStatus = ">:(";
+        nap();
     }
         if (energy >= 100){
         energy = 100;
@@ -64,7 +69,7 @@ public class OrganicDog extends Organic implements Walking{
     }
         if (thirst >= 100){
         thirst = 100;
-        thirstStatus = ">:(";
+        hydrate();
     }
         if( thirst >=75 && thirst<100){
         thirstStatus = ":(";
@@ -84,7 +89,9 @@ public class OrganicDog extends Organic implements Walking{
     }
         if (hunger >= 100){
         hunger = 100;
+        System.out.println(getName() + " is too hungry and not listening until they get feed.");
         hungerStatus = ">:(";
+        tooHungry = true;
     }
         if( hunger >=75 && hunger<100){
         hungerStatus = ":(";
@@ -124,18 +131,25 @@ public class OrganicDog extends Organic implements Walking{
 }
     @Override
     public void feed(){
-        System.out.println(getNoise() + "! " + getName() + " is no longer hunger and has more energy.");
-        hunger -=75;
-        energy +=50;
-        bathroom += 20;
+        if(!isClean() && !isTooHungry()){
+            System.out.println(getName() + " isn't listening. Maybe they need something.");
+        } else {
+            System.out.println(getNoise() + "! " + getName() + " is no longer hunger and has more energy.");
+            hunger -= 75;
+            energy += 50;
+            bathroom += 20;
+        }
     }
     @Override
     public void play() {
-        System.out.println(getName() + "'s tail is wagging and happily plays with you. " + getNoise() + "!");
-        boredom = 0;
-        energy -=25;
-        thirst +=15;
-        hunger +=10;
+        if(!isClean() || isTooHungry()){
+            System.out.println(getName() + " isn't listening. Maybe they need something.");
+        } else {
+            boredom = 0;
+            energy -= 25;
+            thirst += 15;
+            hunger += 10;
+        }
     }
     @Override
     public void help(){
