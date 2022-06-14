@@ -24,6 +24,7 @@ public class RobotDog extends Robotic implements Walking{
             boredom -= 50;
             maintenance += 25;
             thirst += 25;
+            System.out.println(getName() + " had a great time playing and is less bored now.");
         }
     }
     @Override

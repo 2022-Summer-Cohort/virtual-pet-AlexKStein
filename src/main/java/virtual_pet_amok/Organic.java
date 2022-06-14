@@ -28,15 +28,10 @@ public abstract class Organic extends VirtualPet {
 
     @Override
     public void hydrate(){
-        if (isTooHungry() || !isClean()){
-            System.out.println(getName() + " is not listening, maybe they need something?");
-        }
-        else {
-            System.out.println(getName() + " drinks some water and is less thirsty.");
-            thirst -= 50;
-            bathroom += 15;
-            energy += 10;
-        }
+        System.out.println(getName() + " drinks some water and is less thirsty.");
+        thirst -= 50;
+        bathroom += 15;
+        energy += 10;
     }
     public void nap(){
         if (isTooHungry() || !isClean()){
@@ -48,10 +43,17 @@ public abstract class Organic extends VirtualPet {
         }
     }
     public void cleanRoom(){
-        System.out.println(getName() + "'s room and/or litter box is now clean.");
+        System.out.println(getName() + "'s room is now clean.");
         clean = true;
     }
-
+    @Override
+    public void charge(){
+        System.out.println("OOPS. That doesn't plug into an organic pet, maybe try a nap instead...");
+    }
+    @Override
+    public void maintain(){
+        System.out.println("Maintenance is for robot pets only.");
+    }
     @Override
     public void tick() {
         hunger +=10;

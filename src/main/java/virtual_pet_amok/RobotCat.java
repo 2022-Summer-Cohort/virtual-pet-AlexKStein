@@ -14,6 +14,7 @@ public class RobotCat extends Robotic{
             boredom -= 50;
             energy -= 15;
             thirst += 15;
+            System.out.println(getName() + " had a great time playing and is less bored now.");
         }
     }
     @Override

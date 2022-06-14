@@ -63,6 +63,10 @@ public abstract class VirtualPet {
     }
     public abstract void tick();
     public abstract void play();
+    public abstract void nap();
+    public abstract void charge();
+    public abstract void maintain();
+    public abstract void cleanRoom();
     public abstract void status();
     public abstract void feed();
     public abstract void hydrate();

@@ -32,6 +32,7 @@ public class OrganicCat extends Organic{
                 hunger -= 75;
                 energy += 50;
                 bathroom += 20;
+                tooHungry = false;
             }
         }
     }
@@ -44,8 +45,12 @@ public class OrganicCat extends Organic{
         }
         if (boredom >= 100){
             boredom = 100;
-            System.out.println(getName() + " chases a beam of light for a bit and is less bored.");
-            play();
+            if (isTooHungry() || !isClean()){
+                boredomStatus = ">:(";
+            } else {
+                System.out.println(getName() + " chases a beam of light or ghosts or something, and is less bored.");
+                play();
+            }
         }
         if( boredom >=75 && boredom<100){
             boredomStatus = ":(";
@@ -62,8 +67,12 @@ public class OrganicCat extends Organic{
 //energy
         if (energy <0){
             energy = 0;
-            System.out.println("This kitty is too tired: " + getName() + " lies down for a quick nappy.");
-            nap();
+            if (!isClean() || isTooHungry()){
+                energyStatus = ">:(";
+            } else {
+                System.out.println("This kitty is too tired: " + getName() + " lies down for a quick nappy.");
+                nap();
+            }
         }
         if (energy >= 100){
             energy = 100;
@@ -124,30 +133,33 @@ public class OrganicCat extends Organic{
             hungerStatus = "XD";
         }
 //bathroom
-        if (bathroom <0){
-            bathroom = 0;
-        }
-        if (bathroom >= 100){
-            if (clean) {
-                litterBox();
+        if(!clean){
+            bathroomStatus = "X( needs cleaning...";
+        } else {
+            if (bathroom < 0) {
                 bathroom = 0;
             }
-            else{
-                bathroomStatus = ">:(";
-                System.out.println(getName() + "'s litter bot is full, please clean it or they may not listen to you.");
+            if (bathroom >= 100) {
+                if (clean) {
+                    litterBox();
+                    bathroom = 0;
+                } else {
+                    bathroomStatus = ">:(";
+                    System.out.println(getName() + "'s litter bot is full, please clean it or they may not listen to you.");
+                }
             }
-        }
-        if( bathroom >=75){
-            bathroomStatus = ":(";
-        }
-        if (bathroom >=50 && bathroom <75){
-            bathroomStatus = ":/";
-        }
-        if (bathroom >=25 && bathroom <50){
-            bathroomStatus = ":)";
-        }
-        if (bathroom < 25){
-            bathroomStatus = "XD";
+            if (bathroom >= 75) {
+                bathroomStatus = ":(";
+            }
+            if (bathroom >= 50 && bathroom < 75) {
+                bathroomStatus = ":/";
+            }
+            if (bathroom >= 25 && bathroom < 50) {
+                bathroomStatus = ":)";
+            }
+            if (bathroom < 25) {
+                bathroomStatus = "XD";
+            }
         }
 //output
         System.out.println(getNoise() + " ~ " + getName() + ": Hunger = " + hungerStatus +", Thirst = " + thirstStatus + ", Energy = " + energyStatus +", Boredom = " + boredomStatus + ", Bathroom needs = " + bathroomStatus + ", litter box = " + getLitter() + "/4.");
@@ -160,6 +172,7 @@ public class OrganicCat extends Organic{
             boredom -= 50;
             energy -= 25;
             thirst += 15;
+            System.out.println(getName() + " had a great time playing and is less bored now.");
         }
     }
     @Override

@@ -65,24 +65,26 @@ public class VirtualPetShelter {
     }
     public void feedAll(){
         for(VirtualPet thisPet: petShelter){
-            if(thisPet.isTooTired()){
-                riotOut(thisPet);
-            } else {
-                thisPet.feed();
+            if(thisPet instanceof Organic) {
+                if (thisPet.isTooTired()) {
+                    riotOut(thisPet);
+                } else {
+                    thisPet.feed();
+                }
             }
         }
     }
     public void chargeAll(){
         for(VirtualPet thisPet: petShelter){
             if (thisPet instanceof Robotic){
-                ((Robotic) thisPet).charge();
+                thisPet.charge();
             }
         }
     }
     public void maintainAll(){
         for(VirtualPet thisPet: petShelter){
             if (thisPet instanceof Robotic){
-                ((Robotic) thisPet).maintain();
+                thisPet.maintain();
             }
         }
     }
@@ -94,7 +96,7 @@ public class VirtualPetShelter {
     public void cleanAll(){
         for(VirtualPet thisPet: petShelter){
             if (thisPet instanceof Organic){
-                ((Organic) thisPet).cleanRoom();
+                thisPet.cleanRoom();
             }
         }
     }
@@ -113,52 +115,23 @@ public class VirtualPetShelter {
     public void napTime(){
         for(VirtualPet thisPet: petShelter){
             if (thisPet instanceof Organic){
-                ((Organic) thisPet).nap();
+                thisPet.nap();
             }
         }
     }
     public void chargeAndNap(){
         for(VirtualPet thisPet: petShelter){
             if (thisPet instanceof Organic){
-                ((Organic) thisPet).nap();
+                thisPet.nap();
             }
             if (thisPet instanceof Robotic){
-                ((Robotic) thisPet).charge();
+                thisPet.charge();
             }
         }
     }
     public void tick(){
         for(VirtualPet thisPet: petShelter){
             thisPet.tick();
-        }
-    }
-    public void randomEvent(){
-        int chanceNum = (int) (Math.random()*25);
-        switch (chanceNum) {
-            case 0:     System.out.print("[Random Event]");
-                System.out.println("Nap time?!? Organics are snoozing while the Robits plug in for their own nap.");
-                chargeAndNap();
-                break;
-            case 1:     System.out.print("[Random Event]");
-                System.out.println("CHAOS! All the animals are romping, but they're definitely not bored anymore");
-                playAll();
-                break;
-            case 2:     System.out.print("[Random Event]");
-
-                VirtualPet pet1 = petShelter.get((int)(Math.random()*petShelter.size()));
-                VirtualPet pet2 = petShelter.get((int)(Math.random()*petShelter.size()));
-                pet1.play(); pet2.play();
-                System.out.println(pet1.getName() + " and " + pet2.getName() + " are playing together c:");
-                break;
-            case 3:     System.out.print("[Random Event]");
-                pet1 = petShelter.get((int)(Math.random()*petShelter.size()));
-                pet2 = petShelter.get((int)(Math.random()*petShelter.size()));
-                VirtualPet pet3 = petShelter.get((int)(Math.random()*petShelter.size()));
-                pet1.play(); pet2.play(); pet3.play();
-                System.out.println(pet1.getName() + ", " + pet2.getName() + " and " + pet3.getName() + " are all playing together c:");
-                break;
-            default:
-                break;
         }
     }
 }

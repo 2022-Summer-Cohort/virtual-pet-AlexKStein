@@ -70,18 +70,32 @@ public class VirtualPetApplication {
                     System.out.println("Organic pets: 'feed', 'clean' their rooms or 'nap' for a quick snooze.");
                     System.out.println("Robot pets: 'charge' and 'maintenance' ");
                     System.out.println("Just the Doggos: 'walk' all the dogs (robots and organics)");
+                    System.out.println("Hint: try '(command) all' for a quick way to interact with all possible pets");
                     break;
                 case "meet":
+                    shelter.meetAll();
+                    shelter.tick();
+                    break;
+                case "meet all":
                     shelter.meetAll();
                     shelter.tick();
                     break;
                 case "status":
                     shelter.statusAll();
                     break;
+                case "status all":
+                    shelter.statusAll();
+                    break;
+                case "play all":
+                    System.out.println("Wagging tails and Happy meows!");
+                    shelter.playAll();
+                    shelter.tick();
+                    shelter.statusAll();
+                    break;
                 case "play":
                     commandLoopy = true;
                     while (commandLoopy){
-                        System.out.println("Type 'all' to play with all the pets, or their room number to play with just one.");
+                        System.out.println("Type 'all' to play with all the pets, or their name to play with just one.");
                         userInput = input.nextLine();
                         if (userInput.equalsIgnoreCase("quit")){
                             quitGame = true;
@@ -94,13 +108,17 @@ public class VirtualPetApplication {
                         }
                         else if (shelter.isPetFound(userInput)) {
                             shelter.petFinder(userInput).play();
-                            System.out.println(userInput + " loved playing with you.");
                             commandLoopy = false;
                         }
                         else{
                             shelter.wrongCommand();
                         }
                     }
+                    shelter.tick();
+                    shelter.statusAll();
+                    break;
+                case "feed all":
+                    shelter.feedAll();
                     shelter.tick();
                     shelter.statusAll();
                     break;
@@ -118,18 +136,18 @@ public class VirtualPetApplication {
                             commandLoopy = false;
                         }
                         else if (shelter.isPetFound(userInput)) {
-                            if (shelter.petFinder(userInput) instanceof Organic) {
-                                shelter.petFinder(userInput).feed();
-                            }
-                            else{
-                                System.out.println("You tried giving food to a robot, which is complete nonsense.");
-                            }
+                            shelter.petFinder(userInput).feed();
                             commandLoopy = false;
                         }
                         else{
                             shelter.wrongCommand();
                         }
                     }
+                    shelter.tick();
+                    shelter.statusAll();
+                    break;
+                case "walk all":
+                    shelter.walkDogs();
                     shelter.tick();
                     shelter.statusAll();
                     break;
@@ -164,7 +182,11 @@ public class VirtualPetApplication {
                     break;
                 case "recharge":
                     shelter.chargeAndNap();
-                    shelter.walkDogs();
+                    shelter.tick();
+                    shelter.statusAll();
+                    break;
+                case "nap all":
+                    shelter.napTime();
                     shelter.tick();
                     shelter.statusAll();
                     break;
@@ -182,18 +204,18 @@ public class VirtualPetApplication {
                             commandLoopy = false;
                         }
                         else if (shelter.isPetFound(userInput)) {
-                            if (shelter.petFinder(userInput) instanceof Organic) {
-                                ((Organic) shelter.petFinder(userInput)).nap();
-                            }
-                            else{
-                                System.out.println("Robots don't nap, but they might need to charge...");
-                            }
+                            shelter.petFinder(userInput).nap();
                             commandLoopy = false;
                         }
                         else{
                             shelter.wrongCommand();
                         }
                     }
+                    shelter.tick();
+                    shelter.statusAll();
+                    break;
+                case "charge all":
+                    shelter.chargeAll();
                     shelter.tick();
                     shelter.statusAll();
                     break;
@@ -211,18 +233,18 @@ public class VirtualPetApplication {
                             commandLoopy = false;
                         }
                         else if (shelter.isPetFound(userInput)) {
-                            if (shelter.petFinder(userInput) instanceof Robotic) {
-                                ((Robotic) shelter.petFinder(userInput)).charge();
-                            }
-                            else{
-                                System.out.println("OOPS. That doesn't plug into an organic pet, maybe try a nap instead...");
-                            }
+                            shelter.petFinder(userInput).charge();
                             commandLoopy = false;
                         }
                         else{
                             shelter.wrongCommand();
                         }
                     }
+                    shelter.tick();
+                    shelter.statusAll();
+                    break;
+                case "maintenance all":
+                    shelter.maintainAll();
                     shelter.tick();
                     shelter.statusAll();
                     break;
@@ -240,18 +262,18 @@ public class VirtualPetApplication {
                             commandLoopy = false;
                         }
                         else if (shelter.isPetFound(userInput)) {
-                            if (shelter.petFinder(userInput) instanceof Robotic) {
-                                ((Robotic) shelter.petFinder(userInput)).maintain();
-                            }
-                            else{
-                                System.out.println("Maintenance is for robot pets only.");
-                            }
+                            shelter.petFinder(userInput).maintain();
                             commandLoopy = false;
                         }
                         else{
                             shelter.wrongCommand();
                         }
                     }
+                    shelter.tick();
+                    shelter.statusAll();
+                    break;
+                case "hydrate all":
+                    shelter.hydrateAll();
                     shelter.tick();
                     shelter.statusAll();
                     break;
@@ -279,6 +301,11 @@ public class VirtualPetApplication {
                     shelter.tick();
                     shelter.statusAll();
                     break;
+                case "clean all":
+                    shelter.cleanAll();
+                    shelter.tick();
+                    shelter.statusAll();
+                    break;
                 case "clean":
                     commandLoopy = true;
                     while (commandLoopy) {
@@ -292,11 +319,7 @@ public class VirtualPetApplication {
                             shelter.cleanAll();
                             commandLoopy = false;
                         } else if (shelter.isPetFound(userInput)) {
-                            if (shelter.petFinder(userInput) instanceof Organic) {
-                                ((Organic) shelter.petFinder(userInput)).cleanRoom();
-                            } else {
-                                System.out.println("Robots don't produce waste and therefore don't need their rooms' cleaned. How neat is that?!");
-                            }
+                            shelter.petFinder(userInput).cleanRoom();
                             commandLoopy = false;
                         } else {
                             shelter.wrongCommand();
@@ -369,7 +392,6 @@ public class VirtualPetApplication {
                 default:
                     shelter.wrongCommand();
             }
-            shelter.randomEvent();
             if(shelter.getPetShelter().size()<=0){
                 System.out.println("Wow! You've adopted all the pets! Even the weird ones <3");
                 quitGame = true;
@@ -405,7 +427,7 @@ public class VirtualPetApplication {
                         adoptedPet.status();
                         break;
                     case "nap":
-                        ((Organic)adoptedPet).nap();
+                        adoptedPet.nap();
                         adoptedPet.tick();
                         adoptedPet.status();
                         break;
@@ -420,7 +442,7 @@ public class VirtualPetApplication {
                         adoptedPet.status();
                         break;
                     case "clean":
-                        ((Organic)adoptedPet).cleanRoom();
+                        adoptedPet.cleanRoom();
                         adoptedPet.tick();
                         adoptedPet.status();
                         break;
@@ -469,12 +491,12 @@ public class VirtualPetApplication {
                         adoptedPet.status();
                         break;
                     case "charge":
-                        ((Robotic)adoptedPet).charge();
+                        adoptedPet.charge();
                         adoptedPet.tick();
                         adoptedPet.status();
                         break;
                     case "maintain":
-                        ((Robotic)adoptedPet).maintain();
+                        adoptedPet.maintain();
                         adoptedPet.tick();
                         adoptedPet.status();
                         break;
@@ -518,7 +540,7 @@ public class VirtualPetApplication {
                         adoptedPet.status();
                         break;
                     case "nap":
-                        ((Organic)adoptedPet).nap();
+                        adoptedPet.nap();
                         adoptedPet.tick();
                         adoptedPet.status();
                         break;
@@ -528,7 +550,7 @@ public class VirtualPetApplication {
                         adoptedPet.status();
                         break;
                     case "clean":
-                        ((Organic)adoptedPet).cleanRoom();
+                        adoptedPet.cleanRoom();
                         adoptedPet.tick();
                         adoptedPet.status();
                         break;
@@ -572,12 +594,12 @@ public class VirtualPetApplication {
                         adoptedPet.status();
                         break;
                     case "charge":
-                        ((Robotic)adoptedPet).charge();
+                        adoptedPet.charge();
                         adoptedPet.tick();
                         adoptedPet.status();
                         break;
                     case "maintain":
-                        ((Robotic)adoptedPet).maintain();
+                        adoptedPet.maintain();
                         adoptedPet.tick();
                         adoptedPet.status();
                         break;

@@ -27,8 +27,12 @@ public class OrganicDog extends Organic implements Walking{
     }
         if (boredom >= 100){
         boredom = 100;
-        System.out.println(getName() + " gets bored with you and wrestles with a toy.");
-        play();
+        if(!isClean() || isTooHungry()){
+            boredomStatus = ">:(";
+        }else {
+            System.out.println(getName() + " gets bored with you and wrestles with a toy.");
+            play();
+        }
     }
         if( boredom >=75){
         boredomStatus = ":(";
@@ -43,44 +47,44 @@ public class OrganicDog extends Organic implements Walking{
         boredomStatus = "XD";
     }
 //energy
-        if (energy <0){
+    if (energy <0){
         energy = 0;
         nap();
     }
-        if (energy >= 100){
+    if (energy >= 100){
         energy = 100;
         energyStatus = "XD";
     }
-        if( energy >=75 && energy<100){
+    if( energy >=75 && energy<100){
         energyStatus = ":D";
     }
-        if (energy >=50 && energy <75){
+    if (energy >=50 && energy <75){
         energyStatus = ":)";
     }
-        if (energy >=25 && energy <50){
+    if (energy >=25 && energy <50){
         energyStatus = ":/";
     }
-        if (energy < 25){
+    if (energy < 25){
         energyStatus = ":(";
     }
 //thirst
-        if (thirst <0){
+    if (thirst <0){
         thirst = 0;
     }
-        if (thirst >= 100){
+    if (thirst >= 100){
         thirst = 100;
         hydrate();
     }
-        if( thirst >=75 && thirst<100){
+    if( thirst >=75 && thirst<100){
         thirstStatus = ":(";
     }
-        if (thirst >=50 && thirst <75){
+    if (thirst >=50 && thirst <75){
         thirstStatus = ":/";
     }
-        if (thirst >=25 && thirst <50){
+    if (thirst >=25 && thirst <50){
         thirstStatus = ":)";
     }
-        if (thirst < 25){
+    if (thirst < 25){
         thirstStatus = "XD";
     }
 //hunger
@@ -106,26 +110,30 @@ public class OrganicDog extends Organic implements Walking{
         hungerStatus = "XD";
     }
 //bathroom
-        if (bathroom <0){
-        bathroom = 0;
-    }
-        if (bathroom >= 100){
-            System.out.println("Oops! " + getName() + " couldn't wait any longer and had an accident. Please clean up their room.");
-            clean = false;
-            bathroom = 0;
-    }
-        if( bathroom >=75){
-        bathroomStatus = ":(, probably time for a walk...";
-    }
-        if (bathroom >=50 && bathroom <75){
-        bathroomStatus = ":/";
-    }
-        if (bathroom >=25 && bathroom <50){
-        bathroomStatus = ":)";
-    }
-        if (bathroom < 25){
-        bathroomStatus = "XD";
-    }
+        if(!clean){
+            bathroomStatus = "X( needs cleaning...";
+        } else {
+            if (bathroom < 0) {
+                bathroom = 0;
+            }
+            if (bathroom >= 100) {
+                System.out.println("Oops! " + getName() + " couldn't wait any longer and had an accident. Please clean up their room.");
+                clean = false;
+                bathroom = 0;
+            }
+            if (bathroom >= 75) {
+                bathroomStatus = ":(, probably time for a walk...";
+            }
+            if (bathroom >= 50 && bathroom < 75) {
+                bathroomStatus = ":/";
+            }
+            if (bathroom >= 25 && bathroom < 50) {
+                bathroomStatus = ":)";
+            }
+            if (bathroom < 25) {
+                bathroomStatus = "XD";
+            }
+        }
 //output
         System.out.println(getNoise() + " ~ " + getName() + ": Hunger = " + hungerStatus +", Thirst = " + thirstStatus + ", Energy = " + energyStatus +", Boredom = " + boredomStatus + ", Bathroom needs = " + bathroomStatus + ".");
 }
@@ -138,6 +146,7 @@ public class OrganicDog extends Organic implements Walking{
             hunger -= 75;
             energy += 50;
             bathroom += 20;
+            tooHungry = false;
         }
     }
     @Override
@@ -149,6 +158,7 @@ public class OrganicDog extends Organic implements Walking{
             energy -= 25;
             thirst += 15;
             hunger += 10;
+            System.out.println(getName() + " had a great time playing and is less bored now.");
         }
     }
     @Override
